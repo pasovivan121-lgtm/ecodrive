@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="EcoDrive Route AI">
+  <defs>
+    <linearGradient id="leaf" x1="150" y1="170" x2="380" y2="350" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6ee7b7"/>
+      <stop offset="1" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="#05080d"/>
+  <path d="M186 390c52 0 52-86 104-86s52-86 104-86" fill="none" stroke="#34d399" stroke-width="14" stroke-dasharray="2 24" stroke-linecap="round"/>
+  <path d="M330 168c-63 5-106 40-119 95-4 18 7 29 25 25 56-12 90-55 95-119 1-7-5-12-1-1Z" fill="url(#leaf)"/>
+  <circle cx="186" cy="390" r="20" fill="#e9f1f8"/>
+  <circle cx="394" cy="218" r="20" fill="#e9f1f8"/>
+</svg>

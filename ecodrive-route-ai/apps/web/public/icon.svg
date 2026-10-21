@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="EcoDrive Route AI">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b1a16"/>
+      <stop offset="1" stop-color="#04120c"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="120" y1="150" x2="400" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6ee7b7"/>
+      <stop offset="1" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <path d="M150 372c58 0 58-96 116-96s58-96 116-96" fill="none" stroke="#1f3d34" stroke-width="26" stroke-linecap="round"/>
+  <path d="M150 372c58 0 58-96 116-96s58-96 116-96" fill="none" stroke="#34d399" stroke-width="14" stroke-dasharray="2 26" stroke-linecap="round"/>
+  <path d="M318 132c-70 6-118 44-132 106-4 20 8 32 28 28 62-14 100-62 106-132 1-8-6-13-2-2Z" fill="url(#leaf)"/>
+  <path d="M196 262c26-36 56-62 96-88" fill="none" stroke="#04120c" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="150" cy="372" r="24" fill="#e9f1f8"/>
+  <circle cx="382" cy="180" r="24" fill="#e9f1f8"/>
+</svg>

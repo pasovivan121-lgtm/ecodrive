@@ -1,0 +1,9 @@
+npm notice run web@0.0.0 dev
+npm notice run vite --host 127.0.0.1 --port 5173 --strictPort
+
+  VITE v8.3.5  ready in 278 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+23:41:52 ч. [vite] (client) hmr update /src/index.css, /src/components/RouteMap.tsx
+23:42:25 ч. [vite] (client) hmr update /src/index.css, /src/pages/EcoRoute.tsx, /src/pages/Settings.tsx
+23:42:25 ч. [vite] (client) hmr update /src/index.css, /src/components/AppShell.tsx
