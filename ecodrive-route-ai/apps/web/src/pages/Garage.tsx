@@ -70,8 +70,7 @@ export function Garage() {
     setMessage(`${vehicleLabel(seed)} added and set as the active vehicle.`)
   }
 
-  const handleManualSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
+  const handleManualSubmit = () => {
     setError(null)
     setMessage(null)
 
@@ -220,7 +219,15 @@ export function Garage() {
             <p className="mt-1 text-xs text-muted">
               Blank spec fields fall back to typical values for the selected powertrain.
             </p>
-            <form className="mt-3 space-y-3" onSubmit={handleManualSubmit}>
+            <form
+              className="mt-3 space-y-3"
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
+                  event.preventDefault()
+                  handleManualSubmit()
+                }
+              }}
+            >
               <div className="grid grid-cols-2 gap-3">
                 <Field label="Manufacturer" htmlFor="make">
                   <Input
@@ -293,7 +300,7 @@ export function Garage() {
                   />
                 </Field>
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="button" className="w-full" onClick={handleManualSubmit}>
                 <Plus className="h-4 w-4" /> Add vehicle
               </Button>
             </form>

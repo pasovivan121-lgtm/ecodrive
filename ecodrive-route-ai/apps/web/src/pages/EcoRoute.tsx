@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight,
@@ -69,6 +69,7 @@ function PlaceInput({
   onFocus,
   onBlur,
   action,
+  containerRef,
 }: {
   id: string
   label: string
@@ -82,9 +83,10 @@ function PlaceInput({
   onFocus: () => void
   onBlur: () => void
   action?: React.ReactNode
+  containerRef?: React.RefObject<HTMLDivElement | null>
 }) {
   return (
-    <div className="relative">
+    <div className="relative" ref={containerRef}>
       <Field label={label} htmlFor={id}>
         <div className="flex gap-2">
           <Input
@@ -151,6 +153,27 @@ export function EcoRoute() {
   const [notice, setNotice] = useState<string | null>(null)
   const [saved, setSaved] = useState(false)
 
+  const originBoxRef = useRef<HTMLDivElement | null>(null)
+  const destinationBoxRef = useRef<HTMLDivElement | null>(null)
+
+  // Close suggestions on any pointer press outside the two comboboxes, so an
+  // open dropdown can never swallow a click meant for the submit button.
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node
+      if (
+        originBoxRef.current?.contains(target) ||
+        destinationBoxRef.current?.contains(target)
+      ) {
+        return
+      }
+      setShowOriginList(false)
+      setShowDestinationList(false)
+    }
+    document.addEventListener('pointerdown', handlePointerDown, true)
+    return () => document.removeEventListener('pointerdown', handlePointerDown, true)
+  }, [])
+
   const effectiveVehicleId = vehicleId ?? activeVehicleId ?? ''
 
   const originSuggestions = usePlaceSuggestions(originQuery, showOriginList)
@@ -181,8 +204,10 @@ export function EcoRoute() {
     setNotice(null)
   }
 
-  const handlePlan = async (event: React.FormEvent) => {
-    event.preventDefault()
+  const handlePlan = async () => {
+    if (status === 'planning') return
+    setShowOriginList(false)
+    setShowDestinationList(false)
     setError(null)
     setNotice(null)
     setSaved(false)
@@ -310,7 +335,15 @@ export function EcoRoute() {
 
       <div className="grid gap-4 lg:grid-cols-12">
         <Card className="p-5 lg:col-span-5">
-          <form onSubmit={handlePlan} className="space-y-4">
+          <form
+            className="space-y-4"
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
+                event.preventDefault()
+                void handlePlan()
+              }
+            }}
+          >
             <Field label="Vehicle" htmlFor="vehicle">
               <select
                 id="vehicle"
@@ -352,6 +385,7 @@ export function EcoRoute() {
               showList={showOriginList}
               onFocus={() => setShowOriginList(true)}
               onBlur={() => setShowOriginList(false)}
+              containerRef={originBoxRef}
               action={
                 <Button
                   type="button"
@@ -392,9 +426,15 @@ export function EcoRoute() {
               showList={showDestinationList}
               onFocus={() => setShowDestinationList(true)}
               onBlur={() => setShowDestinationList(false)}
+              containerRef={destinationBoxRef}
             />
 
-            <Button type="submit" className="w-full" disabled={status === 'planning'}>
+            <Button
+              type="button"
+              className="w-full"
+              disabled={status === 'planning'}
+              onClick={() => void handlePlan()}
+            >
               {status === 'planning' ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" /> Planning…

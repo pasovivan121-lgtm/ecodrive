@@ -71,8 +71,7 @@ export function SettingsPage() {
     return () => window.removeEventListener('beforeinstallprompt', handler)
   }, [])
 
-  const handleSave = (event: React.FormEvent) => {
-    event.preventDefault()
+  const handleSave = () => {
     setError(null)
     setMessage(null)
 
@@ -177,7 +176,15 @@ export function SettingsPage() {
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">
             Energy price and model assumptions
           </h2>
-          <form className="mt-4 space-y-3" onSubmit={handleSave}>
+          <form
+            className="mt-4 space-y-3"
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
+                event.preventDefault()
+                handleSave()
+              }
+            }}
+          >
             <div className="grid gap-3 sm:grid-cols-2">
               <Field label="Electricity (BGN/kWh)" htmlFor="electricity">
                 <Input
@@ -243,7 +250,7 @@ export function SettingsPage() {
               </Field>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Button type="submit">
+              <Button type="button" onClick={handleSave}>
                 <Zap className="h-4 w-4" /> Save assumptions
               </Button>
               <Button
